@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Own the Market — Monument Growth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#000000;
+    --panel:#0a0b0d;
+    --ink:#f3f5f9;
+    --muted:#9aa2ad;
+    --faint:#5f6670;
+    --accent:#1e90ff;
+    --accent-bright:#5bb6ff;
+    --line:rgba(255,255,255,.09);
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,.anton{font-family:"Anton",Impact,sans-serif;font-weight:400;letter-spacing:.01em}
+
+  /* ---- top bar ---- */
+  .top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:34px 0 0;flex-wrap:wrap}
+  .brand{font-family:"Anton",sans-serif;font-size:22px;letter-spacing:.04em}
+  .brand b{color:var(--accent)}
+  .tag{color:var(--muted);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+
+  /* ---- hero ---- */
+  .hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+  .prepared{color:var(--muted);font-size:15px;margin:0 0 18px}
+  .prepared .name{
+    color:var(--ink);font-weight:600;
+    border-bottom:1px dashed transparent;outline:none;cursor:text;
+    transition:border-color .15s ease;
+  }
+  .prepared .name:hover,.prepared .name:focus{border-bottom-color:var(--faint)}
+  .prepared .name:empty::before{content:"your business";color:var(--faint);font-weight:400}
+  .plan{font-size:clamp(54px,12vw,112px);line-height:.9;margin:0;color:var(--ink);text-transform:uppercase}
+  .plan .bar{display:block;width:92px;height:7px;background:var(--accent);margin:22px 0 0;border-radius:2px}
+  .lede{font-size:clamp(18px,2.4vw,21px);color:var(--muted);max-width:50ch;margin:24px 0 0}
+
+  .priceline{display:flex;align-items:flex-end;gap:14px;margin:34px 0 10px;flex-wrap:wrap}
+  .price{font-family:"Anton",sans-serif;font-size:clamp(40px,7vw,60px);line-height:1;color:var(--accent)}
+  .price small{font-size:20px;color:var(--muted);font-family:"Inter",sans-serif;font-weight:500}
+  .promise{color:var(--muted);font-size:14.5px;letter-spacing:.01em}
+  .promise b{color:var(--ink);font-weight:600}
+
+  /* ---- included ---- */
+  .section{padding:44px 0;border-bottom:1px solid var(--line)}
+  .kicker{font-family:"Anton",sans-serif;font-size:14px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin:0 0 22px}
+  .group{margin:0 0 34px}
+  .group:last-child{margin-bottom:0}
+  .group-h{font-size:24px;margin:0 0 4px;color:var(--ink)}
+  .group-sub{color:var(--faint);font-size:14px;margin:0 0 16px}
+
+  .feat{display:flex;gap:14px;padding:15px 0;border-top:1px solid var(--line)}
+  .feat:first-of-type{border-top:none;padding-top:4px}
+  .check{flex:0 0 auto;width:22px;height:22px;margin-top:2px;color:var(--accent)}
+  .feat .body{flex:1 1 auto;min-width:0}
+  .feat .ttl{font-weight:600;color:var(--ink);font-size:17px}
+  .feat .desc{color:var(--muted);font-size:14.5px;margin-top:2px}
+  .feat .val{flex:0 0 auto;color:var(--faint);font-size:14px;white-space:nowrap;align-self:flex-start;margin-top:2px}
+
+  /* ---- value stack ---- */
+  .stack{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-top:8px}
+  .stack .lv{color:var(--muted);font-size:15px}
+  .stack .lv .big{display:block;font-family:"Anton",sans-serif;font-size:34px;color:var(--ink);line-height:1.05;margin-top:4px}
+  .stack .lv .big.strike{color:var(--faint);text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+  .stack .arrow{color:var(--accent);font-family:"Anton",sans-serif;font-size:30px}
+  .stack .pv .big{color:var(--accent)}
+
+  /* ---- proof ---- */
+  .proof{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;padding:26px 28px}
+  .pquote{font-size:clamp(20px,3vw,26px);line-height:1.3;color:var(--ink);font-weight:600;outline:none;cursor:text}
+  .pquote:empty::before{content:"Type a real result — e.g. Booked 14 jobs in the first 30 days";color:var(--faint);font-weight:400}
+  .pmeta{color:var(--muted);font-size:14.5px;margin-top:12px;outline:none;cursor:text}
+  .pmeta:empty::before{content:"Who it was for — e.g. Mike's Roofing, Cincinnati";color:var(--faint)}
+
+  /* ---- roi ---- */
+  .roi{margin:22px 2px 0;font-size:clamp(17px,2.2vw,20px);color:var(--ink);line-height:1.5}
+  .roi b{color:var(--accent-bright)}
+
+  /* ---- guarantees ---- */
+  .guar{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .gcard{border:1px solid var(--line);border-radius:14px;padding:22px 22px}
+  .gcard .gt{font-family:"Anton",sans-serif;font-size:19px;color:var(--ink);text-transform:uppercase;letter-spacing:.02em}
+  .gcard .gd{color:var(--muted);font-size:14.5px;margin-top:8px}
+
+  /* ---- add-ons ---- */
+  .addons{color:var(--muted)}
+  .addons .ao{padding:14px 0;border-top:1px solid var(--line)}
+  .addons .ao:first-child{border-top:none}
+  .addons .ao b{color:var(--ink)}
+
+  /* ---- footer ---- */
+  .foot{padding:40px 0 60px;text-align:center;color:var(--faint);font-size:14px}
+  .foot .c{color:var(--muted)}
+  .foot a{color:var(--accent);text-decoration:none}
+  .foot .strip{margin-top:14px;font-size:13px;letter-spacing:.02em}
+
+  @media(max-width:560px){
+    body{font-size:16px}
+    .feat{flex-wrap:wrap}
+    .feat .val{width:100%;margin-left:36px;margin-top:4px}
+    .guar{grid-template-columns:1fr}
+    .stack{padding:22px}
+    .stack .arrow{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">MONUMENT<b>.</b>GROWTH</div>
+    <div class="tag">Growth Built To Last</div>
+  </header>
+
+  <section class="hero">
+    <p class="prepared">Prepared for <span class="name" id="clientName" contenteditable="true" spellcheck="false"></span></p>
+    <h1 class="plan">Own the<br>Market<span class="bar"></span></h1>
+    <p class="lede">The complete package — a site that wins, a system that books every lead, and the local search dominance that keeps your phone ringing.</p>
+
+    <div class="priceline">
+      <div class="price">$597<small>/mo</small></div>
+    </div>
+    <p class="promise"><b>$0 upfront</b> · built before you pay · month-to-month · <b>no contract</b></p>
+  </section>
+
+  <section class="section">
+    <p class="kicker">Everything included</p>
+
+    <div class="group">
+      <h3 class="group-h">Your online front door</h3>
+      <p class="group-sub">Look legit, and get found when locals search.</p>
+
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Client-Winning Website</div><div class="desc">Built, hosted, maintained, with your domain handled for you.</div></div>
+        <div class="val">$199/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">5-Star Review Autopilot</div><div class="desc">A review request goes out automatically after every job.</div></div>
+        <div class="val">$97/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Google Maps Magnet</div><div class="desc">Your Google Business Profile optimized and connected so you show up on the map.</div></div>
+        <div class="val">$99/mo value</div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3 class="group-h">Your booking engine</h3>
+      <p class="group-sub">Turn calls, clicks, and old customers into booked jobs.</p>
+
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Dead List Revival</div><div class="desc">We text your old customer list and start booking jobs in week one.</div></div>
+        <div class="val">$149/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Lead Nurture Machine</div><div class="desc">Automatic text and email follow-up until the lead books.</div></div>
+        <div class="val">$97/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Never-Miss-a-Job Auto-Text</div><div class="desc">Every missed call gets an instant text back, so the lead doesn't call the next guy.</div></div>
+        <div class="val">$79/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">60-Second Speed-to-Lead</div><div class="desc">New leads get a reply within a minute, while they're still paying attention.</div></div>
+        <div class="val">$79/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">24/7 AI Receptionist</div><div class="desc">Answers questions and books appointments around the clock.</div></div>
+        <div class="val">$149/mo value</div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3 class="group-h">Your market dominance</h3>
+      <p class="group-sub">Climb the rankings and stay on top — with proof you can see.</p>
+
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Google Rankings Climb</div><div class="desc">Local SEO that moves you up the search results over time.</div></div>
+        <div class="val">$299/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Google Maps Domination</div><div class="desc">24/7 map-rank management, tracked on a grid around your service area.</div></div>
+        <div class="val">$199/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Monthly Proof Report</div><div class="desc">See your map rank climb, every month, in plain numbers.</div></div>
+        <div class="val">$49/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">No-Show Killer</div><div class="desc">Automated reminders that cut no-shows and dead appointments.</div></div>
+        <div class="val">$49/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">All-In-One Inbox</div><div class="desc">Every call, text, and message in one place — nothing slips through.</div></div>
+        <div class="val">$49/mo value</div>
+      </div>
+      <div class="feat">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="body"><div class="ttl">Priority Support</div><div class="desc">You're at the front of the line, always.</div></div>
+        <div class="val">$99/mo value</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="kicker">Proof it works</p>
+    <div class="proof">
+      <div class="pquote" id="proofText" contenteditable="true" spellcheck="false"></div>
+      <div class="pmeta" id="proofMeta" contenteditable="true" spellcheck="false"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="stack">
+      <div class="lv"><span>Everything above, if bought separately</span><span class="big strike">$1,692/mo</span></div>
+      <div class="arrow">→</div>
+      <div class="lv pv"><span>Your price, all of it</span><span class="big">$597/mo</span></div>
+    </div>
+    <p class="roi">If this books you just <b>one extra job a month</b>, it's paid for. Everything after that is yours.</p>
+  </section>
+
+  <section class="section">
+    <p class="kicker">Our promise to you</p>
+    <div class="guar">
+      <div class="gcard">
+        <div class="gt">7-Day Live Promise</div>
+        <div class="gd">Your site is built and shown to you before you pay a cent. Live in 7 days or it's free.</div>
+      </div>
+      <div class="gcard">
+        <div class="gt">Cancel Anytime</div>
+        <div class="gd">Month-to-month, no contract, no lock-in. We keep you by earning it — walk away whenever you want, no penalties, no hard feelings.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="kicker">How we work</p>
+    <div class="gcard">
+      <div class="gd">Regular check-ins, a direct line to us, and a team that treats your growth like our own — for as long as we work together. You're not buying a service, you're getting a partner.</div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="c">Monument Growth · <a href="mailto:jack@monumentgrowth.com">jack@monumentgrowth.com</a> · 513-951-3319</div>
+    <div class="strip">$0 upfront · built before you pay · month-to-month · no contract</div>
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    var el = document.getElementById('clientName');
+    var KEY = 'mg_otm_client';
+    try{
+      var saved = localStorage.getItem(KEY);
+      if(saved) el.textContent = saved;
+    }catch(e){}
+    el.addEventListener('input', function(){
+      try{ localStorage.setItem(KEY, el.textContent.trim()); }catch(e){}
+    });
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); el.blur(); }
+    });
+
+    function bind(id, key){
+      var node = document.getElementById(id);
+      if(!node) return;
+      try{ var v = localStorage.getItem(key); if(v) node.textContent = v; }catch(e){}
+      node.addEventListener('input', function(){
+        try{ localStorage.setItem(key, node.textContent.trim()); }catch(e){}
+      });
+    }
+    bind('proofText','mg_otm_proof');
+    bind('proofMeta','mg_otm_proofmeta');
+  })();
+</script>
+</body>
+</html>
